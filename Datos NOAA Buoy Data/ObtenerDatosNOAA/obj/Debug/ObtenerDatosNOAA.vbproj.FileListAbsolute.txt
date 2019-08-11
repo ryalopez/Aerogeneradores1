@@ -1,0 +1,12 @@
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\bin\Debug\ObtenerDatosNOAA.exe.config
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\bin\Debug\ObtenerDatosNOAA.exe
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\bin\Debug\ObtenerDatosNOAA.pdb
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\bin\Debug\ObtenerDatosNOAA.xml
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.vbprojAssemblyReference.cache
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.Form1.resources
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.Resources.resources
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.vbproj.GenerateResource.cache
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.vbproj.CoreCompileInputs.cache
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.exe
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.xml
+I:\_____Publicaciones y Tesis\Aerogeneradores\Datos NOAA Buoy Data\ObtenerDatosNOAA\obj\Debug\ObtenerDatosNOAA.pdb
