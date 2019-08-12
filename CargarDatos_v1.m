@@ -7,19 +7,12 @@ clear;
 DirectorioDatos = "Aplicación\Datos\Datos NOAA Buoy Data";
 ficheros = struct2table(dir(DirectorioDatos));
 l=height(ficheros);
-for i=1:l
-    disp(strcat("Fichero ",ficheros.name(i)));
+for i=1:l    
     if ficheros.isdir(i)
         if i > 2
-            if mod(i,2)==1
-                % Lee el arbol de directorios
-                [Hs, DirOlas, VelViento, DirViento] = LeerDirectorio(char(ficheros.name(i)));
-            else
-                [Hs, DirOlas, VelViento, DirViento] = LeerDirectorio(char(ficheros.name(i)));
-            end
-        end
-        if i == 3
-            break;
+            % Lee el arbol de directorios
+            observatorio = strcat(DirectorioDatos,'\',char(ficheros.name(i)));
+            [Hs, DirOlas, VelViento, DirViento] = LeerDirectorio(observatorio);
         end
     end
 end
