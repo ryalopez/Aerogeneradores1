@@ -3,10 +3,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 clear;
-  
-ficheros = struct2table(dir());
+
+DirectorioDatos = "Aplicación\Datos\Datos NOAA Buoy Data";
+ficheros = struct2table(dir(DirectorioDatos));
 l=height(ficheros);
 for i=1:l
+    disp(strcat("Fichero ",ficheros.name(i)));
     if ficheros.isdir(i)
         if i > 2
             if mod(i,2)==1
