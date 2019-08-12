@@ -18,16 +18,26 @@ function [Hs, DirOlas, VelViento, DirViento] = LeerDirectorio(observatorio)
             table2array(tabla(:,2)), table2array(tabla(:,3)), ...
             table2array(tabla(:,4)), ...
             table2array(tabla(:,5)),0),'VariableNames',{'Tiempo'});
-        %kike depurar YYYY
-            tabla.YYYY=[];   % borrar columna año
-            tabla.MM=[];     % borrar columna mes
-            tabla.DD=[];     % borrar columna día
-            tabla.hh=[];     % borrar columna hora
-            tabla.mm=[];     % borrar columna minuto
-        t=table2array(tabla(:,1:7));
-        [R, P] = corr(t);
-        writematrix(R,'CorrelacionesCoeficientes.xlsx','Sheet',observatorio);
-        writematrix(P,'CorrelacionesConfianza.xlsx','Sheet',observatorio);
+            tabla(:,1)=[];   % borrar columna año
+            tabla(:,2)=[];     % borrar columna mes
+            tabla(:,3)=[];     % borrar columna día
+            tabla(:,4)=[];     % borrar columna hora
+            if observatorio ~= "SOUTH SANTA ROSA"
+                tabla(:,5)=[];     % borrar columna minuto
+                t=table2array(tabla(:,1:7));
+                [R, P] = corr(t);
+                R=array2table(R,'VariableNames',cabeceras(6:12));
+                P=array2table(P,'VariableNames',cabeceras(6:12));
+            else
+                t=table2array(tabla(:,2:8));
+                [R, P] = corr(t);
+                R=array2table(R,'VariableNames',cabeceras(5:11));
+                P=array2table(P,'VariableNames',cabeceras(5:11));
+            end
+                
+       
+        writetable(R,strcat(observatorio,'\Correlaciones.xlsx'),'Sheet','Coeficientes');
+        writetable(P,strcat(observatorio,'\Correlaciones.xlsx'),'Sheet','Confianza');       
         tabla=[tiempos, tabla];
         observaciones = table2timetable(tabla,'RowTimes','Tiempo');
         save('observaciones.mat','observaciones');
