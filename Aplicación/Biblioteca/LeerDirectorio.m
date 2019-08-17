@@ -14,33 +14,68 @@ function [Hs, DirOlas, VelViento, DirViento] = LeerDirectorio(observatorio)
         datos=data_rem_no0.yeardata;
         cabeceras=data_rem_no0.yearvar;
         tabla=array2table(datos,'VariableNames',cabeceras);
-        tiempos=array2table(datetime(table2array(tabla(:,1)), ...
-            table2array(tabla(:,2)), table2array(tabla(:,3)), ...
-            table2array(tabla(:,4)), ...
-            table2array(tabla(:,5)),0),'VariableNames',{'Tiempo'});
-            tabla(:,1)=[];   % borrar columna año
-            tabla(:,2)=[];     % borrar columna mes
-            tabla(:,3)=[];     % borrar columna día
-            tabla(:,4)=[];     % borrar columna hora
-            if observatorio ~= "SOUTH SANTA ROSA"
-                tabla(:,5)=[];     % borrar columna minuto
-                t=table2array(tabla(:,1:7));
-                [R, P] = corr(t);
-                R=array2table(R,'VariableNames',cabeceras(6:12));
-                P=array2table(P,'VariableNames',cabeceras(6:12));
-            else
-                t=table2array(tabla(:,2:8));
-                [R, P] = corr(t);
-                R=array2table(R,'VariableNames',cabeceras(5:11));
-                P=array2table(P,'VariableNames',cabeceras(5:11));
-            end
-                
-       
+        z=size(tabla);
+        ncolumnas=z(2);
+        if ncolumnas == 18
+            tiempos=array2table(datetime(table2array(tabla(:,1)), ...
+                table2array(tabla(:,2)), table2array(tabla(:,3)), ...
+                table2array(tabla(:,4)), ...
+                table2array(tabla(:,5)),0),'VariableNames',{'Tiempo'});
+            tabla(:,1:5)=[];   % borrar columna año, mes, día, hora, minuto
+        else
+            tiempos=array2table(datetime(table2array(tabla(:,1)), ...
+                table2array(tabla(:,2)), table2array(tabla(:,3)), ...
+                table2array(tabla(:,4)), ...
+                0,0),'VariableNames',{'Tiempo'});
+            tabla(:,1:4)=[];   % borrar columna año, mes, día, hora, minuto        
+        end
+        t=table2array(tabla(:,1:7));
+        z = size(t);
+        kolmo=[];
+        for i = 1:z(2)
+            x=t(:,i);
+            media = mean(x);
+            desv = std(x);
+            [h p]=kstest((x-media)/desv);
+            kolmo(1,i+1)=h;
+            kolmo(2,i+1)=p;
+        end
+          
+        cab = cellstr("Estadisticos");   
+        if ncolumnas == 18
+            D=table2cell(array2table(kolmo,'VariableNames',[cab(1);cabeceras(6:12)]));
+            D(1,1)={"KOLMOGOROV"};
+            D(2,1)={"P-VALOR"};
+            D=cell2table(D,'VariableNames',[cab(1);cabeceras(6:12)]);
+        else
+            D=table2cell(array2table(kolmo,'VariableNames',[cab(1);cabeceras(5:11)]));
+            D(1,1)={"KOLMOGOROV"};
+            D(2,1)={"P-VALOR"};
+            D=cell2table(D,'VariableNames',[cab(1);cabeceras(5:11)]);
+        end       
+        writetable(D,strcat(observatorio,'\Correlaciones.xlsx'),'Sheet','Estadísticos');
+        [R, P] = corrcoef(t,'Rows','complete');
+        cab = cellstr("vs");
+        if ncolumnas == 18
+            x=cabeceras(6:12);
+            R = [x, table2cell(array2table(R))];
+            R=cell2table(R,'VariableNames',[cab(1);cabeceras(6:12)]);
+            P = [x, table2cell(array2table(P))];
+            P=cell2table(P,'VariableNames',[cab(1);cabeceras(6:12)]);
+        else
+            x=cabeceras(5:11);
+            R = [x, table2cell(array2table(R))];
+            R=cell2table(R,'VariableNames',[cab(1);cabeceras(5:11)]);
+            P = [x, table2cell(array2table(P))];
+            P=cell2table(P,'VariableNames',[cab(1);cabeceras(5:11)]);
+        end
         writetable(R,strcat(observatorio,'\Correlaciones.xlsx'),'Sheet','Coeficientes');
-        writetable(P,strcat(observatorio,'\Correlaciones.xlsx'),'Sheet','Confianza');       
-        tabla=[tiempos, tabla];
-        observaciones = table2timetable(tabla,'RowTimes','Tiempo');
-        save('observaciones.mat','observaciones');
+        writetable(P,strcat(observatorio,'\Correlaciones.xlsx'),'Sheet','Confianza');
+        writetable(tabla(:,1:7),strcat(observatorio,'\Correlaciones.xlsx'),'Sheet','Observaciones');       
+        
+        tabla=[tiempos, tabla(:,1:7)];
+        observaciones = table2timetable(tabla,'RowTimes','Tiempo');              
+        save(strcat(observatorio,'\observaciones.mat'),'observaciones');
 %         degreeSymbol = char(176);
 %         newYlabels = {'WD (%)','MWD (º)'};
         %s=stackedplot(observaciones,{'WD','MWD'})
