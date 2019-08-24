@@ -10,9 +10,8 @@ l=height(ficheros);
 for i=1:l    
     if ficheros.isdir(i)
         if i > 2
-            % Lee el arbol de directorios
-            observatorio = strcat(DirectorioDatos,'\',char(ficheros.name(i)));
-            [Hs, DirOlas, VelViento, DirViento] = LeerDirectorio(observatorio);
+            % Lee el arbol de directorios            
+            LeerDirectorio(DirectorioDatos, char(ficheros.name(i)));
         end
     end
 end
